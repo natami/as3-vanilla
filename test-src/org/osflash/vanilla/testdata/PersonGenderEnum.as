@@ -2,7 +2,6 @@
  * Created by sorenjepsen on 08/12/13.
  */
 package org.osflash.vanilla.testdata {
-import org.flexunit.experimental.theories.internals.ParameterizedAssertionError;
 
 [Enum]
 [Marshall(field="gender")]
