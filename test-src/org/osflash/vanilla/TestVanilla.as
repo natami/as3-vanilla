@@ -5,7 +5,8 @@ package org.osflash.vanilla
 	import org.flexunit.asserts.assertNull;
 	import org.flexunit.asserts.assertTrue;
 	import org.osflash.vanilla.testdata.PersonConstructorMetadata;
-	import org.osflash.vanilla.testdata.PersonImplicitFields;
+import org.osflash.vanilla.testdata.PersonGenderEnum;
+import org.osflash.vanilla.testdata.PersonImplicitFields;
 	import org.osflash.vanilla.testdata.PersonMutlipleArgumentSetterMetadata;
 	import org.osflash.vanilla.testdata.PersonPublicFields;
 	import org.osflash.vanilla.testdata.PersonPublicFieldsMetadata;
@@ -216,6 +217,15 @@ import org.osflash.vanilla.testdata.PersonWithAddressConstructor;
             const result : PersonTransientFields = _marshaller.extract(source, PersonTransientFields);
             assertNull(result.name);
             assertEquals(22, result.age);
+        }
+
+        [Test]
+        public function testEnum():void
+        {
+            const source:Object = {gender:"FEMALE"};
+            const result: PersonGenderEnum = _marshaller.extract(source, PersonGenderEnum);
+
+            assertEquals(PersonGenderEnum.FEMALE.gender, result.gender);
         }
 	}
 }
