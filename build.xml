@@ -5,9 +5,9 @@
 	<property file="build.properties" />
 
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
-	<taskdef resource="flexUnitTasks.tasks" classpath="${lib.dir}/flexUnitTasks-4.0.0.jar" />
+    <taskdef resource="flexUnitTasks.tasks" classpath="${lib.dir}/flexunitTasks-4.1.0.jar"/>
 
-	<target name="init">
+    <target name="init">
 		<delete dir="${bin.dir}" />
 		<delete dir="${report.dir}" />
 		<mkdir dir="${bin.dir}" />
