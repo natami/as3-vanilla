@@ -7,8 +7,6 @@ import org.as3commons.reflect.Type;
 
 public class Vanilla {
 
-    private static const METADATA_ENUM_TAG:String = "Enum";
-
     /**
      * Attempts to extract properties from the supplied source object into an instance of the supplied targetType.
      *
@@ -38,7 +36,7 @@ public class Vanilla {
     private function instantiateAndInjectValues(source:Object, targetType:Class, injectionMap:InjectionMap, reflectionMap:Type):* {
         var target:*;
 
-        if (isEnum(reflectionMap)) {
+        if (isEnum(targetType)) {
             target = instantiateEnum(targetType, source);
         } else {
             target = instantiateClass(targetType, fetchConstructorArgs(source, injectionMap));
@@ -55,11 +53,7 @@ public class Vanilla {
         const constructorFields:Array = injectionMap.getConstructorFields();
         for (var i:uint = 0; i < constructorFields.length; i++) {
             var injectionDetail:InjectionDetail = constructorFields[i];
-            if (injectionDetail.isEnum) {
-                result.push(extract(source[injectionDetail.name], injectionDetail.type));
-            } else {
-                result.push(extractValue(source, injectionDetail));
-            }
+            result.push(extractValue(source, injectionDetail));
         }
         return result;
     }
@@ -68,11 +62,7 @@ public class Vanilla {
         const fieldNames:Array = injectionMap.getFieldNames();
         for each (var fieldName:String in fieldNames) {
             const injectionDetail:InjectionDetail = injectionMap.getField(fieldName);
-            if (injectionDetail.isEnum) {
-                target[fieldName] = extract(source[injectionDetail.name], injectionDetail.type);
-            } else {
-                target[fieldName] = extractValue(source, injectionDetail);
-            }
+            target[fieldName] = extractValue(source, injectionDetail);
         }
     }
 
@@ -109,6 +99,8 @@ public class Vanilla {
                 } else if (injectionDetail.arrayTypeHint) {
                     value = extractTypedArray(value, injectionDetail.arrayTypeHint);
                 }
+            } else if (isEnum(injectionDetail.type)) {
+                value = extract(value, injectionDetail.type);
             }
 
             // refuse to allow any automatic coercing to occur.
@@ -166,8 +158,8 @@ public class Vanilla {
     }
 
 
-    private static function isEnum(reflectionMap:Type):Boolean {
-        return reflectionMap.hasMetadata(METADATA_ENUM_TAG);
+    private static function isEnum(clazz:Class):Boolean {
+        return ClassUtils.isImplementationOf(clazz, IEnum);
     }
 }
 }
