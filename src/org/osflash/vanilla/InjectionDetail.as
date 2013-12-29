@@ -1,17 +1,15 @@
 package org.osflash.vanilla {
-internal class InjectionDetail {
+public class InjectionDetail {
     private var _fieldName:String;
     private var _type:Class;
     private var _required:Boolean;
     private var _arrayTypeHint:Class;
-    private var _isEnum:Boolean;
 
-    public function InjectionDetail(fieldName:String, type:Class, required:Boolean, isEnum:Boolean, arrayTypeHint:Class) {
+    public function InjectionDetail(fieldName:String, type:Class, required:Boolean, arrayTypeHint:Class) {
         _fieldName = fieldName;
         _type = type;
         _required = required;
         _arrayTypeHint = arrayTypeHint;
-        _isEnum = isEnum;
     }
 
     public function get name():String {
@@ -36,10 +34,6 @@ internal class InjectionDetail {
 
     public function get arrayTypeHint():Class {
         return _arrayTypeHint;
-    }
-
-    public function get isEnum():Boolean {
-        return _isEnum;
     }
 }
 }

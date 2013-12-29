@@ -4,8 +4,12 @@ import flash.utils.getQualifiedClassName;
 import org.as3commons.lang.ClassUtils;
 import org.as3commons.lang.ObjectUtils;
 import org.as3commons.reflect.Type;
+import org.osflash.vanilla.caching.InjectionMapCache;
 
 public class Vanilla {
+
+    private const injectionMapCache:InjectionMapCache = InjectionMapCache.getInstance();
+
 
     /**
      * Attempts to extract properties from the supplied source object into an instance of the supplied targetType.
@@ -25,15 +29,13 @@ public class Vanilla {
 
         // Construct an InjectionMap which tells us how to inject fields from the source object into
         // the Target class.
-        const injectionMap:InjectionMap = new InjectionMap();
-        const reflectionMap:Type = Type.forClass(targetType);
-        addReflectedRules(injectionMap, reflectionMap);
+        const injectionMap:InjectionMap = injectionMapCache.getInjectionMapForClass(targetType);
 
         // Create a new instance of the targetType; and then inject the values from the source object into it
-        return instantiateAndInjectValues(source, targetType, injectionMap, reflectionMap);
+        return instantiateAndInjectValues(source, targetType, injectionMap);
     }
 
-    private function instantiateAndInjectValues(source:Object, targetType:Class, injectionMap:InjectionMap, reflectionMap:Type):* {
+    private function instantiateAndInjectValues(source:Object, targetType:Class, injectionMap:InjectionMap):* {
         var target:*;
 
         if (isEnum(targetType)) {
@@ -140,6 +142,7 @@ public class Vanilla {
         return ClassUtils.newInstance(targetType, ctorArgs);
     }
 
+
     private static function instantiateEnum(targetType:Class, source:Object):* {
         for each (var constantName:Object in source) {
             return targetType[constantName];
@@ -147,11 +150,6 @@ public class Vanilla {
         return targetType[source];
     }
 
-    private static function addReflectedRules(injectionMap:InjectionMap, reflectionMap:Type):void {
-        ReflectionRulesHelper.addReflectedConstructorRules(injectionMap, reflectionMap);
-        ReflectionRulesHelper.addReflectedFieldRules(injectionMap, reflectionMap);
-        ReflectionRulesHelper.addReflectedSetterRules(injectionMap, reflectionMap);
-    }
 
     private static function isVector(obj:*):Boolean {
         return (getQualifiedClassName(obj).indexOf('__AS3__.vec::Vector') == 0);

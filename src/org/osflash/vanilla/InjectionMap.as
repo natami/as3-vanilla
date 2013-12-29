@@ -1,5 +1,5 @@
 package org.osflash.vanilla {
-internal class InjectionMap {
+public class InjectionMap {
     private var _constructorFields:Array = [];
     private var _fields:Object = {};
     private var _methods:Object = {};

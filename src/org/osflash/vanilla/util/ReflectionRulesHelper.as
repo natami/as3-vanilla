@@ -1,7 +1,7 @@
 /**
  * Created by sorenjepsen on 22/12/13.
  */
-package org.osflash.vanilla {
+package org.osflash.vanilla.util {
 import org.as3commons.lang.ClassUtils;
 import org.as3commons.reflect.Accessor;
 import org.as3commons.reflect.Field;
@@ -11,6 +11,7 @@ import org.as3commons.reflect.Method;
 import org.as3commons.reflect.Parameter;
 import org.as3commons.reflect.Type;
 import org.as3commons.reflect.Variable;
+import org.osflash.vanilla.*;
 
 public class ReflectionRulesHelper {
 
@@ -35,7 +36,7 @@ public class ReflectionRulesHelper {
             if (argument.key == METADATA_FIELD_KEY) {
                 const param:Parameter = reflectionMap.constructor.parameters[i];
                 const arrayTypeHint:Class = extractArrayTypeHint(param.type);
-                injectionMap.addConstructorField(new InjectionDetail(argument.value, param.type.clazz, true, param.type.hasMetadata("Enum"), arrayTypeHint));
+                injectionMap.addConstructorField(new InjectionDetail(argument.value, param.type.clazz, true, arrayTypeHint));
             }
         }
     }
@@ -49,7 +50,7 @@ public class ReflectionRulesHelper {
                 const arrayTypeHint:Class = extractArrayTypeHint(field.type, fieldMetadata);
                 const sourceFieldName:String = extractFieldName(field, fieldMetadata);
 
-                injectionMap.addField(field.name, new InjectionDetail(sourceFieldName, field.type.clazz, false, field.type.hasMetadata("Enum"), arrayTypeHint));
+                injectionMap.addField(field.name, new InjectionDetail(sourceFieldName, field.type.clazz, false, arrayTypeHint));
             }
         }
     }
@@ -71,7 +72,7 @@ public class ReflectionRulesHelper {
                 if (argument.key == METADATA_FIELD_KEY) {
                     const param:Parameter = method.parameters[i];
                     const arrayTypeHint:Class = extractArrayTypeHint(param.type, metadata);
-                    injectionMap.addMethod(method.name, new InjectionDetail(argument.value, param.type.clazz, false, false, arrayTypeHint));
+                    injectionMap.addMethod(method.name, new InjectionDetail(argument.value, param.type.clazz, false, arrayTypeHint));
                 }
             }
         }
