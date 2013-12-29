@@ -11,6 +11,7 @@ import org.osflash.vanilla.TestExtractVector;
 import org.osflash.vanilla.TestVanilla;
 import org.osflash.vanilla.caching.TestInjectionMapCache;
 import org.osflash.vanilla.outside.TestExtractMethod;
+import org.osflash.vanilla.util.TestCacheUtil;
 
 public class TestRunner extends Sprite {
     public static var STAGE:Stage;
@@ -33,7 +34,8 @@ public class TestRunner extends Sprite {
             TestExtractMethod,
             TestExtractVector,
             TestExtractTypedArray,
-            TestInjectionMapCache
+            TestInjectionMapCache,
+            TestCacheUtil
         ]);
     }
 }

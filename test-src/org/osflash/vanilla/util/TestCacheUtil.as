@@ -6,7 +6,7 @@ import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertFalse;
 import org.flexunit.asserts.assertTrue;
 
-public class CacheUtilTest {
+public class TestCacheUtil {
 
     private var cacheUtil:CacheUtil;
 
