@@ -209,6 +209,42 @@ trace(result.phoneNumbers); // [object PhoneNumber],[object PhoneNumber]
 trace((result.phoneNumbers[0] as PhoneNumber).type)	// "home".
 ```
 
+Enum support
+------------
+Java style Enum support is implemented using the IEnum interface, which marks a class for being processed as an Enum.
+
+An As3 example enum:
+
+```actionscript
+public class LocaleEnum extends Enum implements IEnum {
+
+    public static var DA:LocaleEnum = new LocaleEnum("DA");
+    public static var EN:LocaleEnum = new LocaleEnum("EN");
+
+    private var localeName:String;
+
+    function LocaleEnum(localeName:String) {
+        this.localeName = localeName;
+    }
+}
+```
+
+```actionscript
+// The Target Model Class Definition.
+class app.model {
+	public class Locale {
+		public var supportedLocale : LocaleEnum;
+	}
+}
+
+var source : Object = { supportLocale:"DA" };
+var result : Locale = extract(source, Locale);
+
+trace(getQualifiedClassName(result.supportLocale));	// LocaleEnum
+
+
+```
+
 
 
 Dependencies
@@ -216,14 +252,12 @@ Dependencies
 `as3commons-reflect` is used for all reflection; in order to use as3-vanilla you will need to download and add
 the following SWCs to your project's libs folder.
 
-* [ascommons-reflect-1.6.4](http://projects.yoolab.org/maven/content/repositories/releases/org/as3commons/as3commons-reflect/1.6.4/as3commons-reflect-1.6.4.swc)
-* [as3commons-lang-0.3.7](http://projects.yoolab.org/maven/content/repositories/releases/org/as3commons/as3commons-lang/0.3.7/as3commons-lang-0.3.7.swc)
-
+* [ascommons-reflect-1.6.4](https://as3-commons.googlecode.com/files/as3commons-reflect-1.6.4.swc)
+* [as3commons-lang-0.3.7](https://as3-commons.googlecode.com/files/as3commons-lang-0.3.7.swc)
 
 Future Features / Wish List
 ---------------------------
 * The user should be able to define mapping rules without having to use Metadata.
-* Caching of the InjectionMap (assuming Class definitions won't change at run time).
 * Java style mutators (eg: `setFoo()`) could be mapped automatically.
 * By using `as3commons-bytecode` we could perform ByteCode reflection to retrieve the names of parameters; this would 
 would remove the need for constructor marshalling metadata.
