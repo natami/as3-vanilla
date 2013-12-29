@@ -216,7 +216,7 @@ Java style Enum support is implemented using the IEnum interface, which marks a 
 An As3 example enum:
 
 ```actionscript
-public class LocaleEnum extends Enum implements IEnum {
+public class LocaleEnum implements IEnum {
 
     public static var DA:LocaleEnum = new LocaleEnum("DA");
     public static var EN:LocaleEnum = new LocaleEnum("EN");
