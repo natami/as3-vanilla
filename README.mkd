@@ -237,7 +237,7 @@ class app.model {
 	}
 }
 
-var source : Object = { supportLocale:"DA" };
+var source : Object = { supportedLocale:"DA" };
 var result : Locale = extract(source, Locale);
 
 trace(getQualifiedClassName(result.supportLocale));	// LocaleEnum
