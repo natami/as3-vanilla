@@ -25,6 +25,17 @@ public class TestExtractVector {
     }
 
     [Test]
+    public function toplevelStrings():void {
+        const source:Array = ["value1", "value2"];
+
+        const result:Vector.<String> = extract(source, Vector.<String> as Class);
+
+        assertEquals(source.length, result.length);
+        assertEquals(source[0], result[0]);
+        assertEquals(source[1], result[1]);
+    }
+
+    [Test]
     public function numbers():void {
         const source:Object = { numbers: [22, 18, 10294] };
         const result:NumberVectorList = extract(source, NumberVectorList);

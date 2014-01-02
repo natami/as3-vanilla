@@ -1,15 +1,15 @@
 package org.osflash.vanilla
 {
-	import org.flexunit.asserts.assertEquals;
-	import org.flexunit.asserts.assertNotNull;
-	import org.flexunit.asserts.assertTrue;
-	import org.osflash.vanilla.testdata.Address;
-	import org.osflash.vanilla.testdata.NumberArrayList;
-	import org.osflash.vanilla.testdata.PersonWithMultipleAddressesArrayField;
-	import org.osflash.vanilla.testdata.StringArrayList;
+import org.flexunit.asserts.assertEquals;
+import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
+import org.osflash.vanilla.testdata.Address;
+import org.osflash.vanilla.testdata.NumberArrayList;
+import org.osflash.vanilla.testdata.PersonWithMultipleAddressesArrayField;
+import org.osflash.vanilla.testdata.StringArrayList;
 
-	/**
-	 * @author Jonny
+/**
+ * @author Jonny
 	 */
 	public class TestExtractTypedArray
 	{
@@ -26,8 +26,19 @@ package org.osflash.vanilla
 			assertEquals(44, result.numbers[1]);
 			assertEquals(1847, result.numbers[2]);
 		}
-		
-		[Test]
+
+    [Test]
+    public function toplevelStrings():void {
+        const source:Array = ["value1", "value2"];
+
+        const result:Array = extract(source, Array);
+
+        assertEquals(source.length, result.length);
+        assertEquals(source[0], result[0]);
+        assertEquals(source[1], result[1]);
+    }
+
+    [Test]
 		public function strings() : void
 		{
 			const source : Object = {strings:["hello", "world"]};

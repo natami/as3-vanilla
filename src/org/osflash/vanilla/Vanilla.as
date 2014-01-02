@@ -1,5 +1,6 @@
 package org.osflash.vanilla {
-import flash.utils.getQualifiedClassName;
+
+import avmplus.getQualifiedClassName;
 
 import org.as3commons.lang.ClassUtils;
 import org.as3commons.lang.ObjectUtils;
@@ -35,11 +36,13 @@ public class Vanilla {
         return instantiateAndInjectValues(source, targetType, injectionMap);
     }
 
-    private function instantiateAndInjectValues(source:Object, targetType:Class, injectionMap:InjectionMap):* {
+    private function instantiateAndInjectValues(source:*, targetType:Class, injectionMap:InjectionMap):* {
         var target:*;
 
         if (isEnum(targetType)) {
             target = instantiateEnum(targetType, source);
+        } else if (isVector(targetType)) {
+            target = extractVector(source, targetType, Type.forClass(targetType).parameters[0]);
         } else {
             target = instantiateClass(targetType, fetchConstructorArgs(source, injectionMap));
 
@@ -50,6 +53,7 @@ public class Vanilla {
         return target;
     }
 
+
     private function fetchConstructorArgs(source:Object, injectionMap:InjectionMap):Array {
         const result:Array = [];
         const constructorFields:Array = injectionMap.getConstructorFields();
@@ -59,6 +63,7 @@ public class Vanilla {
         }
         return result;
     }
+
 
     private function injectFields(source:Object, target:*, injectionMap:InjectionMap):void {
         const fieldNames:Array = injectionMap.getFieldNames();
@@ -144,9 +149,6 @@ public class Vanilla {
 
 
     private static function instantiateEnum(targetType:Class, source:Object):* {
-        for each (var constantName:Object in source) {
-            return targetType[constantName];
-        }
         return targetType[source];
     }
 
