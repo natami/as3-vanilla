@@ -3,6 +3,7 @@ bin
 dist
 
 # IDE crud.
+.iml
 .project
 .idea
 .DS_Store
