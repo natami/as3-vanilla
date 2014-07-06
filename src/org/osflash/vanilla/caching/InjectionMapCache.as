@@ -1,85 +1,85 @@
 package org.osflash.vanilla.caching
 {
 
-    import flash.errors.IllegalOperationError;
+	import flash.errors.IllegalOperationError;
 
-    import org.as3commons.reflect.Type;
-    import org.osflash.vanilla.InjectionMap;
-    import org.osflash.vanilla.util.*;
+	import org.as3commons.reflect.Type;
+	import org.osflash.vanilla.InjectionMap;
+	import org.osflash.vanilla.util.*;
 
-    public class InjectionMapCache
-    {
+	public class InjectionMapCache
+	{
 
-        private static var instance : InjectionMapCache;
-
-        private var _injectionCache : ICache = new CacheUtil();
+		private static var instance : InjectionMapCache;
 
 
-        public function InjectionMapCache(key : Class)
-        {
-            if (key != SingletonLock)
-            {
-                throw new IllegalOperationError("InjectionMapCache can only be accessed through InjectionMapCache.getInstance()");
-            }
-        }
+		public static function getInstance() : InjectionMapCache
+		{
+			if (!instance)
+			{
+				instance = new InjectionMapCache(SingletonLock);
+			}
+
+			return instance;
+		}
 
 
-        public static function getInstance() : InjectionMapCache
-        {
-            if (!instance)
-            {
-                instance = new InjectionMapCache(SingletonLock);
-            }
+		private static function createInjectionMapForClass(targetType : Class) : InjectionMap
+		{
+			const injectionMap : InjectionMap = new InjectionMap();
+			const reflectionMap : Type = Type.forClass(targetType);
 
-            return instance;
-        }
+			addReflectionRules(injectionMap, reflectionMap);
 
-
-        public function getInjectionMapForClass(targetType : Class) : InjectionMap
-        {
-            if (injectionCache.hasElement(targetType))
-            {
-                return injectionCache.getElement(targetType);
-            }
-
-            const injectionMap : InjectionMap = createInjectionMapForClass(targetType);
-
-            injectionCache.addElement(targetType, injectionMap);
-
-            return injectionMap;
-        }
+			return injectionMap;
+		}
 
 
-        private static function createInjectionMapForClass(targetType : Class) : InjectionMap
-        {
-            const injectionMap : InjectionMap = new InjectionMap();
-            const reflectionMap : Type = Type.forClass(targetType);
-
-            addReflectionRules(injectionMap, reflectionMap);
-
-            return injectionMap;
-        }
+		private static function addReflectionRules(injectionMap : InjectionMap, reflectionMap : Type) : void
+		{
+			ReflectionRulesHelper.addReflectedConstructorRules(injectionMap, reflectionMap);
+			ReflectionRulesHelper.addReflectedFieldRules(injectionMap, reflectionMap);
+			ReflectionRulesHelper.addReflectedSetterRules(injectionMap, reflectionMap);
+		}
 
 
-        private static function addReflectionRules(injectionMap : InjectionMap, reflectionMap : Type) : void
-        {
-            ReflectionRulesHelper.addReflectedConstructorRules(injectionMap, reflectionMap);
-            ReflectionRulesHelper.addReflectedFieldRules(injectionMap, reflectionMap);
-            ReflectionRulesHelper.addReflectedSetterRules(injectionMap, reflectionMap);
-        }
+		public function InjectionMapCache(key : Class)
+		{
+			if (key != SingletonLock)
+			{
+				throw new IllegalOperationError("InjectionMapCache can only be accessed through InjectionMapCache.getInstance()");
+			}
+		}
 
 
-        internal function get injectionCache() : ICache
-        {
-            return _injectionCache;
-        }
+		private var _injectionCache : ICache = new CacheUtil();
+
+		internal function get injectionCache() : ICache
+		{
+			return _injectionCache;
+		}
 
 
-        internal function set injectionCache(value : ICache) : void
-        {
-            _injectionCache = value;
-        }
-    }
+		internal function set injectionCache(value : ICache) : void
+		{
+			_injectionCache = value;
+		}
+
+
+		public function getInjectionMapForClass(targetType : Class) : InjectionMap
+		{
+			if (injectionCache.hasElement(targetType))
+			{
+				return injectionCache.getElement(targetType);
+			}
+
+			const injectionMap : InjectionMap = createInjectionMapForClass(targetType);
+
+			injectionCache.addElement(targetType, injectionMap);
+
+			return injectionMap;
+		}
+	}
 }
 
 internal class SingletonLock

@@ -1,16 +1,16 @@
 package org.osflash.vanilla.util
 {
 
-    public interface ICache
-    {
+	public interface ICache
+	{
 
-        function addElement(key : *, value : *) : void;
-
-
-        function getElement(key : *) : *;
+		function addElement(key : *, value : *) : void;
 
 
-        function hasElement(key : *) : Boolean;
+		function getElement(key : *) : *;
 
-    }
+
+		function hasElement(key : *) : Boolean;
+
+	}
 }

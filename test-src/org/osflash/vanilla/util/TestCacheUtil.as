@@ -1,76 +1,75 @@
 package org.osflash.vanilla.util
 {
 
-    import org.flexunit.asserts.assertEquals;
-    import org.flexunit.asserts.assertFalse;
-    import org.flexunit.asserts.assertTrue;
+	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.assertFalse;
+	import org.flexunit.asserts.assertTrue;
 
-    public class TestCacheUtil
-    {
+	public class TestCacheUtil
+	{
 
-        private var cacheUtil : CacheUtil;
-
-        private static const KEY : String = "cache_key";
-        private static const VALUE : Object = {value : "Some value"};
-
-
-        [Before]
-        public function before() : void
-        {
-            cacheUtil = new CacheUtil();
-        }
+		private static const KEY : String = "cache_key";
+		private static const VALUE : Object = {value : "Some value"};
+		private var cacheUtil : CacheUtil;
 
 
-        [Test]
-        public function testAddElementToCacheWhenAddedThenCacheExists() : void
-        {
-            performAddElement();
-
-            assertEquals(VALUE, cacheUtil.getElement(KEY));
-        }
+		[Before]
+		public function before() : void
+		{
+			cacheUtil = new CacheUtil();
+		}
 
 
-        [Test]
-        public function testHasElementWhenElementIsCachedThenReturnsTrue() : void
-        {
-            performAddElement();
+		[Test]
+		public function testAddElementToCacheWhenAddedThenCacheExists() : void
+		{
+			performAddElement();
 
-            assertTrue(cacheUtil.hasElement(KEY));
-        }
-
-
-        [Test]
-        public function testHasElementWhenElementIsNotCachedThenReturnsFalse() : void
-        {
-            assertFalse(cacheUtil.hasElement(KEY));
-        }
+			assertEquals(VALUE, cacheUtil.getElement(KEY));
+		}
 
 
-        [Test]
-        public function testGetElementWhenElementIsCachedThenReturnsElement() : void
-        {
-            performAddElement();
+		[Test]
+		public function testHasElementWhenElementIsCachedThenReturnsTrue() : void
+		{
+			performAddElement();
 
-            assertEquals(VALUE, performGetElement());
-        }
-
-
-        [Test(expects="org.as3commons.lang.IllegalArgumentError")]
-        public function testGetElementWhenElementIsNotCachedThenThrowsException() : void
-        {
-            performGetElement();
-        }
+			assertTrue(cacheUtil.hasElement(KEY));
+		}
 
 
-        private function performAddElement() : void
-        {
-            cacheUtil.addElement(KEY, VALUE);
-        }
+		[Test]
+		public function testHasElementWhenElementIsNotCachedThenReturnsFalse() : void
+		{
+			assertFalse(cacheUtil.hasElement(KEY));
+		}
 
 
-        private function performGetElement() : Object
-        {
-            return cacheUtil.getElement(KEY);
-        }
-    }
+		[Test]
+		public function testGetElementWhenElementIsCachedThenReturnsElement() : void
+		{
+			performAddElement();
+
+			assertEquals(VALUE, performGetElement());
+		}
+
+
+		[Test(expects="org.as3commons.lang.IllegalArgumentError")]
+		public function testGetElementWhenElementIsNotCachedThenThrowsException() : void
+		{
+			performGetElement();
+		}
+
+
+		private function performAddElement() : void
+		{
+			cacheUtil.addElement(KEY, VALUE);
+		}
+
+
+		private function performGetElement() : Object
+		{
+			return cacheUtil.getElement(KEY);
+		}
+	}
 }

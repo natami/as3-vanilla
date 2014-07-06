@@ -1,8 +1,8 @@
 package org.osflash.vanilla
 {
 
-    public interface IEnum
-    {
+	public interface IEnum
+	{
 
-    }
+	}
 }

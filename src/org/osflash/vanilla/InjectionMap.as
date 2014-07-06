@@ -1,89 +1,89 @@
 package org.osflash.vanilla
 {
 
-    public class InjectionMap
-    {
-        private var _constructorFields : Array = [];
-        private var _fields : Object = {};
-        private var _methods : Object = {};
+	public class InjectionMap
+	{
+		private static function getNames(object : Object) : Array
+		{
+			const result : Array = [];
+			for (var name : String in object)
+			{
+				result.push(name);
+			}
+			return result;
+		}
 
 
-        public function addConstructorField(injectionDetails : InjectionDetail) : void
-        {
-            _constructorFields.push(injectionDetails);
-        }
+		private var _constructorFields : Array = [];
+		private var _fields : Object = {};
+		private var _methods : Object = {};
 
 
-        public function getConstructorFields() : Array
-        {
-            return _constructorFields;
-        }
+		public function addConstructorField(injectionDetails : InjectionDetail) : void
+		{
+			_constructorFields.push(injectionDetails);
+		}
 
 
-        public function addField(fieldName : String, injectionDetails : InjectionDetail) : void
-        {
-            _fields[fieldName] = injectionDetails;
-        }
+		public function getConstructorFields() : Array
+		{
+			return _constructorFields;
+		}
 
 
-        public function getFieldNames() : Array
-        {
-            return getNames(_fields);
-        }
+		public function addField(fieldName : String, injectionDetails : InjectionDetail) : void
+		{
+			_fields[fieldName] = injectionDetails;
+		}
 
 
-        public function getField(fieldName : String) : InjectionDetail
-        {
-            return _fields[fieldName];
-        }
+		public function getFieldNames() : Array
+		{
+			return getNames(_fields);
+		}
 
 
-        public function addMethod(methodName : String, injectionDetails : InjectionDetail) : void
-        {
-            _methods[methodName] ||= [];
-            (_methods[methodName] as Array).push(injectionDetails);
-        }
+		public function getField(fieldName : String) : InjectionDetail
+		{
+			return _fields[fieldName];
+		}
 
 
-        public function getMethodsNames() : Array
-        {
-            return getNames(_methods);
-        }
+		public function addMethod(methodName : String, injectionDetails : InjectionDetail) : void
+		{
+			_methods[methodName] ||= [];
+			(_methods[methodName] as Array).push(injectionDetails);
+		}
 
 
-        public function getMethod(methodName : String) : Array
-        {
-            return _methods[methodName];
-        }
+		public function getMethodsNames() : Array
+		{
+			return getNames(_methods);
+		}
 
 
-        private static function getNames(object : Object) : Array
-        {
-            const result : Array = [];
-            for (var name : String in object)
-            {
-                result.push(name);
-            }
-            return result;
-        }
+		public function getMethod(methodName : String) : Array
+		{
+			return _methods[methodName];
+		}
 
 
-        public function toString() : String
-        {
-            var result : String = "[FieldMap ";
+		public function toString() : String
+		{
+			var result : String = "[FieldMap ";
 
-            result += "ctor:{" + _constructorFields + "}, ";
-            result += "fields:{" + _fields + "}, ";
+			result += "ctor:{" + _constructorFields + "}, ";
+			result += "fields:{" + _fields + "}, ";
 
-            result += "methods:{";
-            for (var methodName : String in _methods)
-            {
-                result += methodName + "(" + getMethod(methodName) + "),";
-            }
-            result += "}";
+			result += "methods:{";
+			for (var methodName : String in _methods)
+			{
+				result += methodName + "(" + getMethod(methodName) + "),";
+			}
+			result += "}";
 
-            result += "]";
-            return result;
-        }
-    }
+			result += "]";
+			return result;
+		}
+	}
 }

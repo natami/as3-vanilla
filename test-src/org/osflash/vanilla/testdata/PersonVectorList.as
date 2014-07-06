@@ -1,10 +1,10 @@
 package org.osflash.vanilla.testdata
 {
 
-    public class PersonVectorList
-    {
+	public class PersonVectorList
+	{
 
-        public var genderList : Vector.<PersonGenderEnum>;
+		public var genderList : Vector.<PersonGenderEnum>;
 
-    }
+	}
 }

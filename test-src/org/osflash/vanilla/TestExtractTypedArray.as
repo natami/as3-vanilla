@@ -1,73 +1,78 @@
 package org.osflash.vanilla
 {
-import org.flexunit.asserts.assertEquals;
-import org.flexunit.asserts.assertNotNull;
-import org.flexunit.asserts.assertTrue;
-import org.osflash.vanilla.testdata.Address;
-import org.osflash.vanilla.testdata.NumberArrayList;
-import org.osflash.vanilla.testdata.PersonWithMultipleAddressesArrayField;
-import org.osflash.vanilla.testdata.StringArrayList;
 
-/**
- * @author Jonny
+	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.assertNotNull;
+	import org.flexunit.asserts.assertTrue;
+	import org.osflash.vanilla.testdata.Address;
+	import org.osflash.vanilla.testdata.NumberArrayList;
+	import org.osflash.vanilla.testdata.PersonWithMultipleAddressesArrayField;
+	import org.osflash.vanilla.testdata.StringArrayList;
+
+	/**
+	 * @author Jonny
 	 */
 	public class TestExtractTypedArray
 	{
 		[Test]
 		public function numbers() : void
 		{
-			const source : Object = {numbers:[21, 44, 1847]};
+			const source : Object = {numbers : [21, 44, 1847]};
 			const result : NumberArrayList = extract(source, NumberArrayList);
 
 			assertNotNull(result.numbers);
 			assertEquals(3, result.numbers.length);
-			
+
 			assertEquals(21, result.numbers[0]);
 			assertEquals(44, result.numbers[1]);
 			assertEquals(1847, result.numbers[2]);
 		}
 
-    [Test]
-    public function toplevelStrings():void {
-        const source:Array = ["value1", "value2"];
 
-        const result:Array = extract(source, Array);
+		[Test]
+		public function toplevelStrings() : void
+		{
+			const source : Array = ["value1", "value2"];
 
-        assertEquals(source.length, result.length);
-        assertEquals(source[0], result[0]);
-        assertEquals(source[1], result[1]);
-    }
+			const result : Array = extract(source, Array);
 
-    [Test]
+			assertEquals(source.length, result.length);
+			assertEquals(source[0], result[0]);
+			assertEquals(source[1], result[1]);
+		}
+
+
+		[Test]
 		public function strings() : void
 		{
-			const source : Object = {strings:["hello", "world"]};
+			const source : Object = {strings : ["hello", "world"]};
 			const result : StringArrayList = extract(source, StringArrayList);
-			
+
 			assertNotNull(result.getStrings());
 			assertEquals(2, result.getStrings().length);
-			
+
 			assertEquals("hello", result.getStrings()[0]);
-			assertEquals("world", result.getStrings()[1]); 
+			assertEquals("world", result.getStrings()[1]);
 		}
-			
+
+
 		[Test]
 		public function complex_viaField() : void
 		{
 			const source : Object = {
-				name: "Jonny",
-				addresses: [
+				name : "Jonny",
+				addresses : [
 					{
-						address1: "Address 1",
-						city: "City 1"
+						address1 : "Address 1",
+						city : "City 1"
 					},
 					{
-						address1: "Address 2",
-						city: "City 2"
+						address1 : "Address 2",
+						city : "City 2"
 					}
 				]
 			};
-			
+
 			const result : PersonWithMultipleAddressesArrayField = extract(source, PersonWithMultipleAddressesArrayField);
 			assertNotNull(result.addresses);
 			assertEquals(2, result.addresses.length);

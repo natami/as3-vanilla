@@ -1,11 +1,11 @@
 package org.osflash.vanilla.testdata
 {
 
-    /**
-     * @author Jonny
-     */
-    public class StringVectorList
-    {
-        public var strings : Vector.<String>;
-    }
+	/**
+	 * @author Jonny
+	 */
+	public class StringVectorList
+	{
+		public var strings : Vector.<String>;
+	}
 }

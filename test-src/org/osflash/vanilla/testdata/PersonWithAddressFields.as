@@ -1,5 +1,6 @@
 package org.osflash.vanilla.testdata
 {
+
 	/**
 	 * @author Jonny
 	 */
