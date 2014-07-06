@@ -1,14 +1,16 @@
-/**
- * Created by sorenjepsen on 29/12/13.
- */
-package org.osflash.vanilla.util {
-public interface ICache {
+package org.osflash.vanilla.util
+{
 
-    function addElement(key:*, value:*):void;
+    public interface ICache
+    {
 
-    function getElement(key:*):*;
+        function addElement(key : *, value : *) : void;
 
-    function hasElement(key:*):Boolean;
 
-}
+        function getElement(key : *) : *;
+
+
+        function hasElement(key : *) : Boolean;
+
+    }
 }

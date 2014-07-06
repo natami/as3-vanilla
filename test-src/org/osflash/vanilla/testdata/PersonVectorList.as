@@ -1,10 +1,10 @@
-/**
- * Created by sorenjepsen on 22/12/13.
- */
-package org.osflash.vanilla.testdata {
-public class PersonVectorList {
+package org.osflash.vanilla.testdata
+{
 
-    public var genderList:Vector.<PersonGenderEnum>;
+    public class PersonVectorList
+    {
 
-}
+        public var genderList : Vector.<PersonGenderEnum>;
+
+    }
 }

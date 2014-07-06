@@ -1,26 +1,31 @@
-package org.osflash.vanilla.outside {
-import org.flexunit.asserts.assertEquals;
-import org.osflash.vanilla.extract;
+package org.osflash.vanilla.outside
+{
 
-/**
- * @author Jonny
- */
-public class TestExtractMethod {
-    [Test]
-    public function useConvenienceMethod():void {
-        const source:Object = {
-            name: "Jonny",
-            age: 28
-        };
+    import org.flexunit.asserts.assertEquals;
+    import org.osflash.vanilla.extract;
 
-        const result:PersonVO = extract(source, PersonVO);
-        assertEquals("Jonny", result.name);
-        assertEquals(28, result.age);
+    /**
+     * @author Jonny
+     */
+    public class TestExtractMethod
+    {
+        [Test]
+        public function useConvenienceMethod() : void
+        {
+            const source : Object = {
+                name : "Jonny",
+                age : 28
+            };
+
+            const result : PersonVO = extract(source, PersonVO);
+            assertEquals("Jonny", result.name);
+            assertEquals(28, result.age);
+        }
     }
 }
-}
 
-class PersonVO {
-    public var name:String;
-    public var age:uint;
+class PersonVO
+{
+    public var name : String;
+    public var age : uint;
 }

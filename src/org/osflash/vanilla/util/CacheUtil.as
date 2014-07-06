@@ -1,35 +1,44 @@
 /**
  * Created by sorenjepsen on 29/12/13.
  */
-package org.osflash.vanilla.util {
-import flash.utils.Dictionary;
+package org.osflash.vanilla.util
+{
 
-import org.as3commons.lang.IllegalArgumentError;
+    import flash.utils.Dictionary;
 
-public class CacheUtil implements ICache {
+    import org.as3commons.lang.IllegalArgumentError;
 
-    private var cacheDictionary:Dictionary = new Dictionary();
+    public class CacheUtil implements ICache
+    {
 
-    public function CacheUtil() {
-    }
-
-
-    public function addElement(key:*, value:*):void {
-        cacheDictionary[key] = value;
-    }
+        private var cacheDictionary : Dictionary = new Dictionary();
 
 
-    public function getElement(key:*):* {
-        if (!hasElement(key)) {
-            throw new IllegalArgumentError("No cached element found for key: " + key);
+        public function CacheUtil()
+        {
         }
 
-        return cacheDictionary[key];
-    }
+
+        public function addElement(key : *, value : *) : void
+        {
+            cacheDictionary[key] = value;
+        }
 
 
-    public function hasElement(key:*):Boolean {
-        return cacheDictionary[key] != null;
+        public function getElement(key : *) : *
+        {
+            if (!hasElement(key))
+            {
+                throw new IllegalArgumentError("No cached element found for key: " + key);
+            }
+
+            return cacheDictionary[key];
+        }
+
+
+        public function hasElement(key : *) : Boolean
+        {
+            return cacheDictionary[key] != null;
+        }
     }
-}
 }

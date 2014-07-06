@@ -1,132 +1,146 @@
-package org.osflash.vanilla {
-import org.flexunit.asserts.assertEquals;
-import org.flexunit.asserts.assertNotNull;
-import org.flexunit.asserts.assertTrue;
-import org.osflash.vanilla.testdata.Address;
-import org.osflash.vanilla.testdata.NestedComplexVectorList;
-import org.osflash.vanilla.testdata.NestedNumberVectorList;
-import org.osflash.vanilla.testdata.NumberVectorList;
-import org.osflash.vanilla.testdata.PersonGenderEnum;
-import org.osflash.vanilla.testdata.PersonWithMultipleAddressesVectorField;
-import org.osflash.vanilla.testdata.StringVectorList;
+package org.osflash.vanilla
+{
 
-public class TestExtractVector {
+    import org.flexunit.asserts.assertEquals;
+    import org.flexunit.asserts.assertNotNull;
+    import org.flexunit.asserts.assertTrue;
+    import org.osflash.vanilla.testdata.Address;
+    import org.osflash.vanilla.testdata.NestedComplexVectorList;
+    import org.osflash.vanilla.testdata.NestedNumberVectorList;
+    import org.osflash.vanilla.testdata.NumberVectorList;
+    import org.osflash.vanilla.testdata.PersonGenderEnum;
+    import org.osflash.vanilla.testdata.PersonWithMultipleAddressesVectorField;
+    import org.osflash.vanilla.testdata.StringVectorList;
 
-    [Test]
-    public function strings():void {
-        const source:Object = { strings: ["red", "white", "blue"] };
-        const result:StringVectorList = extract(source, StringVectorList);
+    public class TestExtractVector
+    {
 
-        assertNotNull(result.strings);
-        assertEquals(3, result.strings.length);
-        assertEquals("red", result.strings[0]);
-        assertEquals("white", result.strings[1]);
-        assertEquals("blue", result.strings[2]);
-    }
+        [Test]
+        public function strings() : void
+        {
+            const source : Object = { strings : ["red", "white", "blue"] };
+            const result : StringVectorList = extract(source, StringVectorList);
 
-    [Test]
-    public function toplevelStrings():void {
-        const source:Array = ["value1", "value2"];
+            assertNotNull(result.strings);
+            assertEquals(3, result.strings.length);
+            assertEquals("red", result.strings[0]);
+            assertEquals("white", result.strings[1]);
+            assertEquals("blue", result.strings[2]);
+        }
 
-        const result:Vector.<String> = extract(source, Vector.<String> as Class);
 
-        assertEquals(source.length, result.length);
-        assertEquals(source[0], result[0]);
-        assertEquals(source[1], result[1]);
-    }
+        [Test]
+        public function toplevelStrings() : void
+        {
+            const source : Array = ["value1", "value2"];
 
-    [Test]
-    public function numbers():void {
-        const source:Object = { numbers: [22, 18, 10294] };
-        const result:NumberVectorList = extract(source, NumberVectorList);
+            const result : Vector.<String> = extract(source, Vector.<String> as Class);
 
-        assertNotNull(result.numbers);
-        assertEquals(3, result.numbers.length);
-        assertEquals(22, result.numbers[0]);
-        assertEquals(18, result.numbers[1]);
-        assertEquals(10294, result.numbers[2]);
-    }
+            assertEquals(source.length, result.length);
+            assertEquals(source[0], result[0]);
+            assertEquals(source[1], result[1]);
+        }
 
-    [Test]
-    public function complex_viaField():void {
-        const source:Object = {
-            name: "Jonny",
-            addresses: [
-                {
-                    address1: "Address 1",
-                    city: "City 1"
-                },
-                {
-                    address1: "Address 2",
-                    city: "City 2"
-                }
-            ],
-            genders: [PersonGenderEnum.FEMALE, PersonGenderEnum.MALE]
-        };
 
-        const result:PersonWithMultipleAddressesVectorField = extract(source, PersonWithMultipleAddressesVectorField);
-        assertNotNull(result.addresses);
-        assertEquals(2, result.addresses.length);
-        assertTrue(result.addresses[0] is Address);
-        assertEquals(source["addresses"][0]["address1"], result.addresses[0].address1);
-        assertEquals(source["addresses"][0]["city"], result.addresses[0].city);
-        assertEquals(source["addresses"][1]["address1"], result.addresses[1].address1);
-        assertEquals(source["addresses"][1]["city"], result.addresses[1].city);
-        assertEquals(PersonGenderEnum.FEMALE, result.genders[0]);
-        assertEquals(PersonGenderEnum.MALE, result.genders[1]);
-    }
+        [Test]
+        public function numbers() : void
+        {
+            const source : Object = { numbers : [22, 18, 10294] };
+            const result : NumberVectorList = extract(source, NumberVectorList);
 
-    [Test]
-    public function nested_numbers():void {
-        const source:Object = {
-            numbers: [
-                [1, 2],
-                [4, 5],
-                [7, 8, 9]
-            ]
-        };
+            assertNotNull(result.numbers);
+            assertEquals(3, result.numbers.length);
+            assertEquals(22, result.numbers[0]);
+            assertEquals(18, result.numbers[1]);
+            assertEquals(10294, result.numbers[2]);
+        }
 
-        const result:NestedNumberVectorList = extract(source, NestedNumberVectorList);
-        assertEquals(3, result.numbers.length);
 
-        assertEquals(1, result.numbers[0][0]);
-        assertEquals(2, result.numbers[0][1]);
-        assertEquals(4, result.numbers[1][0]);
-        assertEquals(5, result.numbers[1][1]);
-        assertEquals(7, result.numbers[2][0]);
-        assertEquals(8, result.numbers[2][1]);
-        assertEquals(9, result.numbers[2][2]);
-    }
-
-    [Test]
-    public function nested_complex():void {
-        const source:Object = {
-            people: [
-                [
+        [Test]
+        public function complex_viaField() : void
+        {
+            const source : Object = {
+                name : "Jonny",
+                addresses : [
                     {
-                        name: "jonny",
-                        age: 28,
-                        artists: [ "mew", "tool" ]
+                        address1 : "Address 1",
+                        city : "City 1"
                     },
                     {
-                        name: "mayakwd",
-                        age: 26,
-                        address: {
-                            address1: "Somewhere",
-                            city: "Tomsk"
-                        },
-                        gender: PersonGenderEnum.MALE
+                        address1 : "Address 2",
+                        city : "City 2"
                     }
+                ],
+                genders : [PersonGenderEnum.FEMALE, PersonGenderEnum.MALE]
+            };
+
+            const result : PersonWithMultipleAddressesVectorField = extract(source, PersonWithMultipleAddressesVectorField);
+            assertNotNull(result.addresses);
+            assertEquals(2, result.addresses.length);
+            assertTrue(result.addresses[0] is Address);
+            assertEquals(source["addresses"][0]["address1"], result.addresses[0].address1);
+            assertEquals(source["addresses"][0]["city"], result.addresses[0].city);
+            assertEquals(source["addresses"][1]["address1"], result.addresses[1].address1);
+            assertEquals(source["addresses"][1]["city"], result.addresses[1].city);
+            assertEquals(PersonGenderEnum.FEMALE, result.genders[0]);
+            assertEquals(PersonGenderEnum.MALE, result.genders[1]);
+        }
+
+
+        [Test]
+        public function nested_numbers() : void
+        {
+            const source : Object = {
+                numbers : [
+                    [1, 2],
+                    [4, 5],
+                    [7, 8, 9]
                 ]
-            ]
-        };
+            };
 
-        const result:NestedComplexVectorList = extract(source, NestedComplexVectorList);
+            const result : NestedNumberVectorList = extract(source, NestedNumberVectorList);
+            assertEquals(3, result.numbers.length);
 
-        assertEquals("jonny", result.people[0][0].name);
-        assertEquals("Tomsk", result.people[0][1].address.city);
-        assertEquals(PersonGenderEnum.MALE, result.people[0][1].gender);
+            assertEquals(1, result.numbers[0][0]);
+            assertEquals(2, result.numbers[0][1]);
+            assertEquals(4, result.numbers[1][0]);
+            assertEquals(5, result.numbers[1][1]);
+            assertEquals(7, result.numbers[2][0]);
+            assertEquals(8, result.numbers[2][1]);
+            assertEquals(9, result.numbers[2][2]);
+        }
 
+
+        [Test]
+        public function nested_complex() : void
+        {
+            const source : Object = {
+                people : [
+                    [
+                        {
+                            name : "jonny",
+                            age : 28,
+                            artists : [ "mew", "tool" ]
+                        },
+                        {
+                            name : "mayakwd",
+                            age : 26,
+                            address : {
+                                address1 : "Somewhere",
+                                city : "Tomsk"
+                            },
+                            gender : PersonGenderEnum.MALE
+                        }
+                    ]
+                ]
+            };
+
+            const result : NestedComplexVectorList = extract(source, NestedComplexVectorList);
+
+            assertEquals("jonny", result.people[0][0].name);
+            assertEquals("Tomsk", result.people[0][1].address.city);
+            assertEquals(PersonGenderEnum.MALE, result.people[0][1].gender);
+
+        }
     }
-}
 }

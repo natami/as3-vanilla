@@ -1,28 +1,35 @@
 /**
  * Created by sorenjepsen on 08/12/13.
  */
-package org.osflash.vanilla.testdata {
-import org.osflash.vanilla.IEnum;
+package org.osflash.vanilla.testdata
+{
 
-public class PersonGenderEnum implements IEnum {
+    import org.osflash.vanilla.IEnum;
 
-    public static const MALE:PersonGenderEnum = new PersonGenderEnum("MALE");
-    public static const FEMALE:PersonGenderEnum = new PersonGenderEnum("FEMALE");
+    public class PersonGenderEnum implements IEnum
+    {
 
-    private var _value:String;
+        public static const MALE : PersonGenderEnum = new PersonGenderEnum("MALE");
+        public static const FEMALE : PersonGenderEnum = new PersonGenderEnum("FEMALE");
 
-    public function PersonGenderEnum(gender:String) {
-        this._value = gender;
+        private var _value : String;
+
+
+        public function PersonGenderEnum(gender : String)
+        {
+            this._value = gender;
+        }
+
+
+        public function get value() : String
+        {
+            return _value;
+        }
+
+
+        public function toString() : String
+        {
+            return _value;
+        }
     }
-
-
-    public function get value():String {
-        return _value;
-    }
-
-
-    public function toString():String {
-        return _value;
-    }
-}
 }
