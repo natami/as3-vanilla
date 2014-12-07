@@ -1,14 +1,14 @@
 AS3 Vanilla
 ===========
 
-Download v0.1.3 Release Archive: [as3-vanilla-0.1.3.zip](https://dl.dropbox.com/u/4551551/github/as3-vanilla/as3-vanilla-0.1.3.zip)
+Download v0.2.0 Release Archive: [as3-vanilla-0.2.0.swc](hhttps://dl.dropboxusercontent.com/u/22095429/maven/org/osflash/as3-vanilla/0.2.0/as3-vanilla-0.2.0.zip)
 
 A lightweight library which enables a developer to extract a strongly typed Model Object from a untyped dynamic object 
 without having to write a single line of parsing or marshalling code.  An example use case would be turning data 
 returned from a JSON endpoint into a Model, if you've ever written the following code, then you can benefit from this 
 library:
 
-```actionscript
+```
 // Use a JSON library to convert a JSON String into an AS3 Object.
 var jsonObject : Object = JSON.decode('{"name":"Jonny", "age": 28, "music":["nin","mew"]}');
 
@@ -23,7 +23,7 @@ trace(myPerson.name) // Jonny.
 
 Using the Vanilla library, you can turn the above code into this:
 
-```actionscript
+```
 // Use a JSON library to convert a JSON String into an AS3 Object.
 var jsonObject : Object = JSON.decode('{"name":"Jonny", "age": 28, "music":["nin","mew"]}');
 
@@ -35,7 +35,7 @@ trace(myPerson.name);  // "Jonny"
 
 Things get even easier when you make use of the `extract` convenience method:
 
-```actionscript
+```
 var jsonObject : Object = JSON.decode('{"name":"Jonny", "age": 28, "music":["nin","mew"]}');
 var myPerson : PersonVO = extract(jsonObject, PersonVO);
 ```
@@ -43,7 +43,7 @@ var myPerson : PersonVO = extract(jsonObject, PersonVO);
 Got a complex object graph?  Well that's where Vanilla really shines, making light work of parsing and 
 marshalling nested objects, for example:
 
-```actionscript
+```
 // The PersonVO Model contains an 'address' field which is a complex datatype (AddressVO).
 package app.model {
 	class PersonVO {
@@ -77,7 +77,7 @@ Mapping Fields
 Sometimes the fields on your Model object don't quite match up to the fields in your source object; not a problem, 
 you can use Metadata to define the mappings in your Model object:
 
-```actionscript
+```
 package app.model {
 	public class PersonVO {
 		public var name : String;
@@ -93,7 +93,7 @@ Mapping to Constructor Arguments
 If you're a fan of immutable models then you will want to define some Metadata to map the fields in your source object
 to the constructor arguments of your Model object:
 
-```actionscript
+```
 package app.model {
 	// Don't forget, constructor metadata is annotated to the class, not the constructor method!
 	[Marshall(field="name", field="age", field="music")]
@@ -116,7 +116,7 @@ Mapping to Methods / Mutators
 -----------------------------
 You can map the fields of your source object to a setter method in your Model object:
 
-```actionscript
+```
 package app.model {
 	public class PersonModel {
 		private var _name : String;
@@ -141,7 +141,7 @@ Ignoring fields
 -----------------------------
 You can ignore fields by using [Transient] metadata:
 
-```actionscript
+```
 package app.model {
 	public class PersonModel {
 		[Transient]
@@ -158,7 +158,7 @@ Automatic Coercion
 Vanilla will automatically coerce Arrays found in your source object into Vectors defined in your target Model
 Class, take the following example:
 
-```actionscript
+```
 // The Target Model Class Definition.
 class app.model {
 	public class ColourList {
@@ -176,7 +176,7 @@ trace(getQualifiedClassName(result.colours));	// __AS3__.vec::Vector.<String>
 If you aren't using Vectors in your project, then you will have to give Vanilla a hand and provide it with a type hint
 as to what the Array is expected to contain, for example:
 
-```actionscript
+```
 // The Target Model Class Definition.
 class app.model {
 	public class Contact {
@@ -215,7 +215,7 @@ Java style Enum support is implemented using the IEnum interface, which marks a 
 
 An As3 example enum:
 
-```actionscript
+```
 public class LocaleEnum implements IEnum {
 
     public static var DA:LocaleEnum = new LocaleEnum("DA");
@@ -229,7 +229,7 @@ public class LocaleEnum implements IEnum {
 }
 ```
 
-```actionscript
+```
 // The Target Model Class Definition.
 class app.model {
 	public class Locale {
@@ -249,9 +249,6 @@ trace(getQualifiedClassName(result.supportedLocale));	// LocaleEnum
 
 Dependencies
 ------------
-`as3commons-reflect` is used for all reflection; in order to use as3-vanilla you will need to download and add
-the following SWCs to your project's libs folder.
-
 * [ascommons-reflect-1.6.4](https://as3-commons.googlecode.com/files/as3commons-reflect-1.6.4.swc)
 * [as3commons-lang-0.3.7](https://as3-commons.googlecode.com/files/as3commons-lang-0.3.7.swc)
 
