@@ -175,6 +175,7 @@
                             <execution>
                                 <goals>
                                     <goal>prepare</goal>
+                                    <goal>perform</goal>
                                 </goals>
                                 <phase>install</phase>
                             </execution>
@@ -182,9 +183,8 @@
                         <configuration>
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                             <tagNameFormat>@{project.version}</tagNameFormat>
-                            <dryRun>true</dryRun>
+                            <dryRun>false</dryRun>
                             <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
-                            <completionGoals>perform</completionGoals>
                         </configuration>
                     </plugin>
                 </plugins>
